@@ -28,7 +28,7 @@ public class CardDeliveryTest {
         SelenideElement dataInput = $("[data-test-id='date'] input");
         dataInput.sendKeys(Keys.CONTROL + "a");
         dataInput.sendKeys(Keys.DELETE);
-        dataInput.sendKeys("24.01.2022");
+        dataInput.sendKeys("25.01.2022");
         $("[data-test-id='name'] input").setValue("Комаров Виктор");
         $("[data-test-id='phone'] input").setValue("+78565478547");
         $("[data-test-id='agreement']").click();
