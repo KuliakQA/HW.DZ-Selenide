@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
@@ -25,16 +27,16 @@ public class CardDeliveryTest {
     public void shouldSuccessfulSendValidForm() {
         Configuration.holdBrowserOpen = true;
         $("[data-test-id='city'] input").setValue("Москва");
-        SelenideElement dataInput = $("[data-test-id='date'] input");
-        dataInput.sendKeys(Keys.CONTROL + "a");
-        dataInput.sendKeys(Keys.DELETE);
-        dataInput.sendKeys("25.01.2022");
+        String date = LocalDate.now().plusDays(8).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input").sendKeys(Keys.DELETE);
+        $("[data-test-id=date] input").setValue(date);
         $("[data-test-id='name'] input").setValue("Комаров Виктор");
         $("[data-test-id='phone'] input").setValue("+78565478547");
         $("[data-test-id='agreement']").click();
         $(withText("Забронировать")).click();
         $("[data-test-id='notification']")
-                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на 25.01.2022"),
+                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на " + date),
                         Duration.ofSeconds(15));
 
     }
@@ -43,16 +45,16 @@ public class CardDeliveryTest {
     public void shouldSuccessfulSendValidFormWithSmallName() {
         Configuration.holdBrowserOpen = true;
         $("[data-test-id='city'] input").setValue("Калининград");
-        SelenideElement dataInput = $("[data-test-id='date'] input");
-        dataInput.sendKeys(Keys.CONTROL + "a");
-        dataInput.sendKeys(Keys.DELETE);
-        dataInput.sendKeys("28.01.2022");
+        String date = LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input").sendKeys(Keys.DELETE);
+        $("[data-test-id=date] input").setValue(date);
         $("[data-test-id='name'] input").setValue("Ян Гэ");
         $("[data-test-id='phone'] input").setValue("+78565478547");
         $("[data-test-id='agreement']").click();
         $(withText("Забронировать")).click();
         $("[data-test-id='notification']")
-                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на 28.01.2022"),
+                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на " + date),
                         Duration.ofSeconds(15));
 
     }
@@ -61,16 +63,16 @@ public class CardDeliveryTest {
     public void shouldSuccessfulSendValidFormWithDistantDate() {
         Configuration.holdBrowserOpen = true;
         $("[data-test-id='city'] input").setValue("Калининград");
-        SelenideElement dataInput = $("[data-test-id='date'] input");
-        dataInput.sendKeys(Keys.CONTROL + "a");
-        dataInput.sendKeys(Keys.DELETE);
-        dataInput.sendKeys("15.01.2023");
+        String date = LocalDate.now().plusDays(400).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input").sendKeys(Keys.DELETE);
+        $("[data-test-id=date] input").setValue(date);
         $("[data-test-id='name'] input").setValue("Ян Гэ");
         $("[data-test-id='phone'] input").setValue("+78565478547");
         $("[data-test-id='agreement']").click();
         $(withText("Забронировать")).click();
         $("[data-test-id='notification']")
-                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на 15.01.2023"),
+                .shouldHave(Condition.text("Успешно! Встреча успешно забронирована на " + date),
                         Duration.ofSeconds(15));
 
     }
