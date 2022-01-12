@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -11,13 +12,18 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class CardDeliveryTest {
+
+    @BeforeEach
+    void setUp() {
+        open("http://localhost:9999");
+    }
 
     @Test
     public void shouldSuccessfulSendValidForm() {
         Configuration.holdBrowserOpen = true;
-        Selenide.open("http://localhost:9999/");
         $("[data-test-id='city'] input").setValue("Москва");
         SelenideElement dataInput = $("[data-test-id='date'] input");
         dataInput.sendKeys(Keys.CONTROL + "a");
@@ -36,7 +42,6 @@ public class CardDeliveryTest {
     @Test
     public void shouldSuccessfulSendValidFormWithSmallName() {
         Configuration.holdBrowserOpen = true;
-        Selenide.open("http://localhost:9999/");
         $("[data-test-id='city'] input").setValue("Калининград");
         SelenideElement dataInput = $("[data-test-id='date'] input");
         dataInput.sendKeys(Keys.CONTROL + "a");
@@ -55,7 +60,6 @@ public class CardDeliveryTest {
     @Test
     public void shouldSuccessfulSendValidFormWithDistantDate() {
         Configuration.holdBrowserOpen = true;
-        Selenide.open("http://localhost:9999/");
         $("[data-test-id='city'] input").setValue("Калининград");
         SelenideElement dataInput = $("[data-test-id='date'] input");
         dataInput.sendKeys(Keys.CONTROL + "a");
